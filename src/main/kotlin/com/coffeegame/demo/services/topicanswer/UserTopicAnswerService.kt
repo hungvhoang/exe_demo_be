@@ -22,4 +22,5 @@ data class UserTopicAnswerQueryParam(
     var userName: String = "",
     var question: String = "",
     var title: String = "",
+    var sortBy: String = "submittedAt",
 )

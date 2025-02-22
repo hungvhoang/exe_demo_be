@@ -21,9 +21,14 @@ class UserTopicAnswerServiceImpl @Autowired constructor(
     override fun submitAnswer(dto: UserSubmitAnswerDTO): UserTopicAnswer {
         val user = userRepository.findById(dto.userId).orElse(null)
         val topic = topicRepository.findById(dto.topicId).orElse(null)
+        val check = userTopicAnswerRepository.findAllByTopic_TopicIdAndUser_UserId(dto.topicId, dto.userId)
 
         if (user == null || topic == null) {
             throw IllegalArgumentException("User or Topic not found")
+        }
+
+        if (check.isNotEmpty()) {
+            throw IllegalArgumentException("User already answered this topic")
         }
 
         val answer = UserTopicAnswer(

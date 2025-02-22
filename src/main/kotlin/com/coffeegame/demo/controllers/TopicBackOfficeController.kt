@@ -1,6 +1,5 @@
 package com.coffeegame.demo.controllers
 
-import com.coffeegame.demo.dtos.UserSubmitAnswerDTO
 import com.coffeegame.demo.models.Topic
 import com.coffeegame.demo.services.topic.TopicQueryParam
 import com.coffeegame.demo.services.topic.TopicService
@@ -29,6 +28,18 @@ class TopicBackOfficeController @Autowired constructor(
     ): ResponseEntity<Any> {
         return try {
             ResponseEntity.ok(topicService.createTopic(topic))
+        } catch (e: Exception) {
+            ResponseEntity.internalServerError().body(e.message)
+        }
+    }
+
+    @PostMapping("/topic/create-list")
+    @Operation(summary = "create topics")
+    fun createTopics(
+        @RequestBody topics: List<Topic>
+    ): ResponseEntity<Any> {
+        return try {
+            ResponseEntity.ok(mapOf("success" to topicService.createList(topics)))
         } catch (e: Exception) {
             ResponseEntity.internalServerError().body(e.message)
         }
@@ -90,18 +101,6 @@ class TopicBackOfficeController @Autowired constructor(
         return try {
             ResponseEntity.ok(userTopicAnswerService.approveAnswer(id))
         } catch (e: Exception) {
-            ResponseEntity.internalServerError().body(e.message)
-        }
-    }
-
-    @PostMapping("/topic/answer/submit")
-    @Operation(summary = "submit answer")
-    fun submitAnswer(
-        @RequestBody userSubmitAnswerDTO: UserSubmitAnswerDTO
-    ): ResponseEntity<Any> {
-        return try {
-            ResponseEntity.ok(userTopicAnswerService.submitAnswer(userSubmitAnswerDTO))
-        } catch (e : Exception) {
             ResponseEntity.internalServerError().body(e.message)
         }
     }

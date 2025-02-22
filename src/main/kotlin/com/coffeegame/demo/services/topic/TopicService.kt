@@ -13,6 +13,12 @@ interface TopicService {
     fun deleteTopicById(id: String)
 
     fun listByQuery(query: TopicQueryParam): List<Topic>
+
+    fun getUserTopics(userId: String): List<Topic>
+
+    fun getTopic(userId: String, topicId: String): Topic
+
+    fun createList(topics: List<Topic>): Boolean
 }
 
 data class TopicQueryParam(

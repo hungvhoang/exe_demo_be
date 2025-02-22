@@ -6,6 +6,12 @@ import org.springframework.data.mongodb.repository.Query
 
 interface UserTopicAnswerRepository: MongoRepository<UserTopicAnswer, String> {
 
+    fun findAllByUser_UserId(userId: String): List<UserTopicAnswer>
+
+    fun findAllByTopic_TopicId(topicId: String): List<UserTopicAnswer>
+
+    fun findAllByTopic_TopicIdAndUser_UserId(topicId: String, userId: String): List<UserTopicAnswer>
+
     @Query(
         "{ \$and: [ " +
                 " { 'answerId': { \$regex: ?0, \$options: 'i' } }, " +

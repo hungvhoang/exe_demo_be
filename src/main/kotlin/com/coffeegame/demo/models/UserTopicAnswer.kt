@@ -17,7 +17,7 @@ data class UserTopicAnswer(
     @DBRef
     val topic: Topic,
 
-    var status: AnswerStatus = AnswerStatus.PASS_WORD_CONDITION,
+    var status: AnswerStatus = AnswerStatus.NOT_PASS_WORD_CONDITION,
 
     val submittedAt: LocalDateTime = LocalDateTime.now(),
 
